@@ -10,7 +10,7 @@ sceptre_user_data:
       creation_policy:
         resource_signal:
           count: 1
-          timeout: PT5M
+          timeout: PT15M
       image_id: !rcmd echo -n $(helper-scripts/get-ami-id.sh)
       iam_instance_profile: !stack_output "{{pwd}}/iam-instanceprofile.yaml::GenericInstanceRole"
       instance_type: t3a.micro
@@ -29,7 +29,7 @@ sceptre_user_data:
           device_index: "0"
           group_set:
             - !stack_output {{pwd}}/ec2-securitygroup.yaml::TestStationInstanceSG
-          subnet_id: !stack_output_external vpcdemo-demo02a-ec2-subnet::SubnetPrivateA
+          subnet_id: !stack_output_external vpcdemo-demo02a-ec2-subnet::SubnetPublicA
       tags:
         Name: TestStation
         Project: {{ stack_group_config.project_code }}
@@ -90,7 +90,7 @@ sceptre_user_data:
       user_data: |
         Fn::Base64:
           Fn::Sub: |
-            #!/bin/bash -xe
+            #!/bin/bash
             # Initialize the system using instructions from metadata
             /opt/aws/bin/cfn-init \
               --stack ${AWS::StackName} \

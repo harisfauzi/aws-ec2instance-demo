@@ -9,7 +9,7 @@ sceptre_user_data:
 
     - name: TestStationInstanceSG
       group_description: Test Instance Security Group
-      vpc_id: !stack_output_external erm-aws-ap2-tool-dev-network::vpcId
+      vpc_id: !stack_output_external vpcdemo-demo02a-ec2-vpc::VPC
       tags:
         Name: TeststationInstance-SG
         Project: {{ stack_group_config.project_code }}
