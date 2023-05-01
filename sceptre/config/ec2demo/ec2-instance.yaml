@@ -11,7 +11,7 @@ sceptre_user_data:
         resource_signal:
           count: 1
           timeout: PT15M
-      image_id: !rcmd echo -n $(helper-scripts/get-ami-id.sh)
+      image_id: !rcmd echo -n $(AWS_DEFAULT_REGION={{region}} helper-scripts/get-ami-id.sh)
       iam_instance_profile: !stack_output "{{pwd}}/iam-instanceprofile.yaml::GenericInstanceRole"
       instance_type: t3a.micro
       block_device_mappings:
