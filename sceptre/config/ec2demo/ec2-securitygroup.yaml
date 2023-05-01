@@ -1,0 +1,27 @@
+---
+template:
+  path: ec2/security_group.yaml.j2
+
+sceptre_user_data:
+  project_code: "{{stack_group_config.project_code}}"
+  source_repo_url: "{{stack_group_config.source_repo_url}}"
+  security_groups:
+
+    - name: TestStationInstanceSG
+      group_description: Test Instance Security Group
+      vpc_id: !stack_output_external erm-aws-ap2-tool-dev-network::vpcId
+      tags:
+        Name: TeststationInstance-SG
+        Project: {{ stack_group_config.project_code }}
+      security_group_egress:
+        - ip_protocol: -1
+          description: Allow all outgoing
+          cidr_ip: '0.0.0.0/0'
+
+stack_tags:
+  squad: vulcan
+  environment: staging
+  stage: dev
+  platform: dts-tooling
+  version: 0.0.1
+  wbs: SG.ADM.100
